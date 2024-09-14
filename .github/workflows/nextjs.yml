@@ -62,6 +62,9 @@ jobs:
       - name: Build with Next.js
         run: cd twoyears && ${{ env.runner }} next build
 
+      - name: List files after build
+        run: ls -la twoyears/out
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
