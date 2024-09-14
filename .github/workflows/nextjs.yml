@@ -45,6 +45,8 @@ jobs:
         with:
           node-version: "20"
           cache: ${{ env.manager }}
+          always-auth: false
+          check-latest: false
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
