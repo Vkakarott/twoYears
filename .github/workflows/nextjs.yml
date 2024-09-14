@@ -63,12 +63,12 @@ jobs:
         run: cd twoyears && ${{ env.runner }} next build
 
       - name: List files after build
-        run: ls -la twoyears/out
+        run: ls -la twoyears/.next
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: twoyears/out
+          path: twoyears/.next
 
   deploy:
     environment:
