@@ -36,7 +36,7 @@ jobs:
       - name: Detect package manager
         id: detect-package-manager
         run: |
-          if [ -f "${{ github.workspace }}/package.json" ]; then
+          if [ -f "${{ github.workspace }}/twoyears/package.json" ]; then
             echo "manager=npm" >> $GITHUB_OUTPUT
             echo "command=ci" >> $GITHUB_OUTPUT
             echo "runner=npx --no-install" >> $GITHUB_OUTPUT
@@ -62,22 +62,22 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            .next/cache
-          # Generate a new cache whenever packages or source files change.
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-          # If source files changed but packages didn't, rebuild from a prior cache.
+            twoyears/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('twoyears/**/package-lock.json', 'twoyears/**/yarn.lock') }}-${{ hashFiles('twoyears/**.[jt]s', 'twoyears/**.[jt]sx') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
+            ${{ runner.os }}-nextjs-${{ hashFiles('twoyears/**/package-lock.json', 'twoyears/**/yarn.lock') }}-
+
       - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+        run: cd twoyears && ${{ env.manager }} ${{ env.command }}
+
       - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: cd twoyears && ${{ env.runner }} next build
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: twoyears/out
 
-  # Deployment job
   deploy:
     environment:
       name: github-pages
