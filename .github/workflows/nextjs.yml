@@ -27,11 +27,11 @@ jobs:
       - name: Detect package manager
         id: detect-package-manager
         run: |
-          if [ -f "${{ github.workspace }}/twoyears/package.json" ]; then
+          if [ -f "${{ github.workspace }}/package.json" ]; then
             echo "manager=npm" >> $GITHUB_ENV
             echo "command=ci" >> $GITHUB_ENV
             echo "runner=npx --no-install" >> $GITHUB_ENV
-          elif [ -f "${{ github.workspace }}/twoyears/yarn.lock" ]; then
+          elif [ -f "${{ github.workspace }}/yarn.lock" ]; then
             echo "manager=yarn" >> $GITHUB_ENV
             echo "command=install" >> $GITHUB_ENV
             echo "runner=yarn" >> $GITHUB_ENV
@@ -51,24 +51,24 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            twoyears/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('twoyears/**/package-lock.json', 'twoyears/**/yarn.lock') }}-${{ hashFiles('twoyears/**.[jt]s', 'twoyears/**.[jt]sx') }}
+            .next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('/**/package-lock.json', '/**/yarn.lock') }}-${{ hashFiles('/**.[jt]s', '/**.[jt]sx') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('twoyears/**/package-lock.json', 'twoyears/**/yarn.lock') }}-
+            ${{ runner.os }}-nextjs-${{ hashFiles('/**/package-lock.json', '/**/yarn.lock') }}-
 
       - name: Install dependencies
-        run: cd twoyears && ${{ env.manager }} ${{ env.command }}
+        run: ${{ env.manager }} ${{ env.command }}
 
       - name: Build with Next.js
-        run: cd twoyears && ${{ env.runner }} next build
+        run: ${{ env.runner }} next build
 
       - name: List files after build
-        run: ls -la twoyears/.next
+        run: ls -la .next
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: twoyears/.next
+          path: .next
 
   deploy:
     environment:
