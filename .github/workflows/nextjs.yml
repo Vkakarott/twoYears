@@ -60,7 +60,7 @@ jobs:
         run: ${{ env.manager }} ${{ env.command }}
 
       - name: Build with Next.js
-        run: ${{ env.runner }} next build && ${{ env.runner }} next export
+        run: ${{ env.runner }} next build
 
       - name: List files after build
         run: ls -la out
