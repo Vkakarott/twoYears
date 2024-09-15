@@ -53,22 +53,22 @@ jobs:
           path: |
             .next/cache
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**/*.[jt]s', '**/*.[jt]sx') }}
-          restore-keys: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
-
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
 
       - name: Install dependencies
         run: ${{ env.manager }} ${{ env.command }}
 
       - name: Build with Next.js
-        run: ${{ env.runner }} next build
+        run: ${{ env.runner }} next build && ${{ env.runner }} next export
 
       - name: List files after build
-        run: ls -la .next
+        run: ls -la out
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .next
+          path: out
 
   deploy:
     environment:
