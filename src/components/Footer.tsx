@@ -30,10 +30,10 @@ export default function Footer() {
 
       const past = diffMs < 0;
       if (past) {
-        diffMs = Math.abs(diffMs); // Se a data alvo estiver no futuro, faz o cálculo com valor absoluto
+        diffMs = Math.abs(diffMs);
       }
 
-      // Calculando a diferença de datas de forma precisa
+
       const diffYears = currentDate.getFullYear() - targetDate.getFullYear();
       const diffMonths = currentDate.getMonth() - targetDate.getMonth();
       const diffDays = currentDate.getDate() - targetDate.getDate();
@@ -48,7 +48,6 @@ export default function Footer() {
       let minutes = diffMinutes;
       let seconds = diffSeconds;
 
-      // Ajustando os valores para garantir que não temos valores negativos
       if (seconds < 0) {
         seconds += 60;
         minutes--;
@@ -62,7 +61,6 @@ export default function Footer() {
         days--;
       }
       if (days < 0) {
-        // Calcula os dias com base no mês anterior
         const lastMonthDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0);
         days += lastMonthDate.getDate();
         months--;

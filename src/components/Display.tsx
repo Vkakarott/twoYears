@@ -8,7 +8,7 @@ export default function Display() {
                 autoPlay
                 muted
                 loop
-                src="/VID-AMR.mp4"
+                src="./VID-AMR.mp4"
             ></video>
         </main>
     );
