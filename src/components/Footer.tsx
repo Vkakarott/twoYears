@@ -85,7 +85,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="flex flex-col justify-center items-center h-20 text-sm gap-2">
+    <footer className="flex flex-col justify-center items-center h-28 text-sm gap-2">
       <p className="text-xl">&#128536;&#10084;&#65039;&#65039;</p>
       <p>
         {timeDiff.years > 0 && timeDiff.years < 2 && `${timeDiff.years} ano`}
