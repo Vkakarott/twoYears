@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 
 const targetDate = new Date("2022-09-24T20:00:00");
 
@@ -14,6 +12,17 @@ interface TimeDiff {
 }
 
 export default function Footer() {
+  const [message, setMessage] = useState(false);
+  const [declaration, setDeclaration] = useState(0);
+  const declarations = ['Pode partir meu coração mil vezes se desejar, sempre foi seu para fazer o que quiser. Amarei você até meu último suspiro, não quero morrer sem que você saiba disso.', 'Seja qual for a matéria de que as nossas almas são feitas, a minha e a dele são iguais.']
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDeclaration((declaration + 1) % declarations.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [message]);
+
   const [timeDiff, setTimeDiff] = useState<TimeDiff>({
     years: 0,
     months: 0,
@@ -86,16 +95,27 @@ export default function Footer() {
 
   return (
     <footer className="flex flex-col justify-center items-center h-28 text-sm gap-2">
-      <p className="text-xl">&#128536;&#10084;&#65039;&#65039;</p>
-      <p>
-        {timeDiff.years > 0 && timeDiff.years < 2 && `${timeDiff.years} ano`}
-        {timeDiff.years > 1 && `${timeDiff.years} anos`}
-        {timeDiff.months > 0 && `, ${timeDiff.months} meses`}
-        {timeDiff.days > 0 && `, ${timeDiff.days} dias`}
-        {timeDiff.hours > 0 && `, ${timeDiff.hours} horas`}
-        {timeDiff.minutes > 0 && `, ${timeDiff.minutes} minutos`}
-        {timeDiff.seconds > 0 && `, ${timeDiff.seconds} segundos`}
-      </p>
+      <button onClick={() => setMessage(!message)}>
+        {message ? (
+          <>
+            <p className="text-xl">👑💍</p>
+            <p>{declarations[declaration]}</p>
+          </>
+        ) : (
+          <>
+            <p className="text-xl">&#128536;&#10084;&#65039;&#65039;</p>
+            <p>
+              {timeDiff.years > 0 && timeDiff.years < 2 && `${timeDiff.years} ano`}
+              {timeDiff.years > 1 && `${timeDiff.years} anos`}
+              {timeDiff.months > 0 && `, ${timeDiff.months} meses`}
+              {timeDiff.days > 0 && `, ${timeDiff.days} dias`}
+              {timeDiff.hours > 0 && `, ${timeDiff.hours} horas`}
+              {timeDiff.minutes > 0 && `, ${timeDiff.minutes} minutos`}
+              {timeDiff.seconds > 0 && `, ${timeDiff.seconds} segundos`}
+            </p>
+          </>
+        )}
+      </button>
     </footer>
   );
 }
