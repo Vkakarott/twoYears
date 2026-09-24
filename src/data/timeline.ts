@@ -115,6 +115,12 @@ export const timeline: TimelineEvent[] = [
     title: 'Primeira vez no parque aquático',
     emoji: '🌊',
   },
+  {
+    date:  '2026-02-13',
+    label: '13 de fevereiro de 2026',
+    title: 'Ida para Caldas Novas',
+    emoji: '🌡️',
+  },
 ];
 
 export const sortedTimeline = [...timeline].sort(
