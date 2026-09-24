@@ -10,7 +10,7 @@ export default function PixelSection() {
       style={{ background: '#000000' }}
     >
       <motion.img
-        src={`${import.meta.env.BASE_URL}pixel-heart.png`}
+        src={`${import.meta.env.BASE_URL}pixel-heart.webp`}
         alt="Coração pixelado"
         initial={{ opacity: 0, scale: 0.85 }}
         whileInView={{ opacity: 1, scale: 1 }}
