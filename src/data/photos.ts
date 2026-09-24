@@ -18,4 +18,8 @@ export const mediaItems: MediaItem[] = [
   { src: `${b}IMG-20241222-WA0039.jpg`,     type: 'image', caption: 'O presente que importa' }, // 22/12/2024
   { src: `${b}IMG-20250420-WA0012.jpg`,     type: 'image', caption: 'Pra sempre'       }, // 20/04/2025
   { src: `${b}IMG-20250420-WA0016.jpg`,     type: 'image', caption: 'Sempre juntos'    }, // 20/04/2025
+  { src: `${b}IMG-20251225-WA0037.webp`,    type: 'image', caption: 'Nosso Natal'      }, // 25/12/2025
+  { src: `${b}IMG-20260424-WA0025.jpg`,     type: 'image', caption: 'Mais um dia 24'   }, // 24/04/2026
+  { src: `${b}IMG-20260424-WA0028.webp`,    type: 'image', caption: 'Combinando até na roupa' }, // 24/04/2026
+  { src: `${b}IMG-20260924-minecraft.webp`, type: 'image', caption: 'Nosso mundo'      }, // 24/09/2026 — 4 anos
 ];
