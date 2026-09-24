@@ -13,7 +13,7 @@ export const tracks: Track[] = [
     id:       'track-1',
     title:    'Die For You',
     artist:   'Vitor',
-    src:      `${b}music/track.mp4`,
+    src:      `${b}music/track.mp3`,
     coverSrc: `${b}IMG-20241222-WA0039.jpg`,
   },
 ];
