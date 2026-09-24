@@ -61,20 +61,20 @@ export default function GallerySection() {
                 className="shrink-0 rounded-xl overflow-hidden"
                 style={{
                   height:   isCenter ? '58dvh' : '42dvh',
-                  width:    isCenter ? '70vw'  : '22vw',
-                  cursor: isCenter ? 'pointer' : 'default',
+                  maxWidth: isCenter ? 'min(80vw, 640px)' : '22vw',
+                  cursor:   isCenter ? 'pointer' : 'default',
                 }}
                 onClick={() => { if (isCenter) setLightbox(media); }}
               >
                 {media.type === 'video' ? (
                   <video
-                    className="w-full h-full object-cover pointer-events-none"
+                    className="block h-full w-auto max-w-full object-cover pointer-events-none"
                     src={media.src}
                     muted loop autoPlay={isCenter}
                   />
                 ) : (
                   <img
-                    className="w-full h-full object-cover pointer-events-none"
+                    className="block h-full w-auto max-w-full object-cover pointer-events-none"
                     src={media.src}
                     alt={media.caption}
                     draggable={false}
