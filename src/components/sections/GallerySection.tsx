@@ -9,7 +9,7 @@ export default function GallerySection() {
   const total = mediaItems.length;
 
   const prev = useCallback(() => setCurrent(i => (i - 1 + total) % total), [total]);
-  const next = useCallback(() => setCurrent(i => (i + 1) % total),          [total]);
+  const next = useCallback(() => setCurrent(i => (i + 1) % total), [total]);
 
   const indices = [
     (current - 1 + total) % total,
@@ -17,10 +17,15 @@ export default function GallerySection() {
     (current + 1) % total,
   ];
 
+  const handleDragEnd = (_: unknown, info: { offset: { x: number } }) => {
+    if (info.offset.x < -40) next();
+    else if (info.offset.x > 40) prev();
+  };
+
   return (
     <section data-snap data-section="gallery" id="gallery"
-      className="flex flex-col items-center justify-center gap-6 px-4"
-      style={{ background: '#0f0a0d' }}
+      className="flex flex-col items-center justify-center gap-6 overflow-hidden"
+      style={{ background: '#0f0a0d', maxWidth: '100vw' }}
     >
       <motion.p
         initial={{ opacity: 0, y: -20 }}
@@ -32,12 +37,14 @@ export default function GallerySection() {
         nossas memórias
       </motion.p>
 
-      <div className="flex items-center gap-3 md:gap-5 w-full justify-center">
-        <button onClick={prev} aria-label="Anterior"
-          className="text-2xl shrink-0 transition-opacity hover:opacity-100 opacity-50"
-          style={{ color: 'var(--color-accent)' }}>‹</button>
-
-        <div className="flex items-center gap-3">
+      <div className="w-full overflow-hidden">
+        <motion.div
+          className="flex items-center justify-center gap-3 cursor-grab active:cursor-grabbing"
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.15}
+          onDragEnd={handleDragEnd}
+        >
           {indices.map((idx, pos) => {
             const media = mediaItems[idx];
             const isCenter = pos === 1;
@@ -51,33 +58,32 @@ export default function GallerySection() {
                   rotate:  isCenter ? 0   : (pos === 0 ? -3 : 3),
                 }}
                 transition={{ duration: 0.35, ease: 'easeInOut' }}
-                className="cursor-pointer shrink-0 rounded-xl overflow-hidden"
-                style={{ height: isCenter ? '58dvh' : '42dvh', maxWidth: isCenter ? '70vw' : '25vw' }}
-                onClick={() => isCenter ? setLightbox(media) : setCurrent(idx)}
+                className="shrink-0 rounded-xl overflow-hidden"
+                style={{
+                  height:   isCenter ? '58dvh' : '42dvh',
+                  width:    isCenter ? '70vw'  : '22vw',
+                  cursor: isCenter ? 'pointer' : 'default',
+                }}
+                onClick={() => { if (isCenter) setLightbox(media); }}
               >
                 {media.type === 'video' ? (
                   <video
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover pointer-events-none"
                     src={media.src}
-                    muted
-                    loop
-                    autoPlay={isCenter}
+                    muted loop autoPlay={isCenter}
                   />
                 ) : (
                   <img
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover pointer-events-none"
                     src={media.src}
                     alt={media.caption}
+                    draggable={false}
                   />
                 )}
               </motion.div>
             );
           })}
-        </div>
-
-        <button onClick={next} aria-label="Próximo"
-          className="text-2xl shrink-0 transition-opacity hover:opacity-100 opacity-50"
-          style={{ color: 'var(--color-accent)' }}>›</button>
+        </motion.div>
       </div>
 
       <AnimatePresence mode="wait">
